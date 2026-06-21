@@ -1,61 +1,34 @@
 # Python
+.venv/
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
 *.py[cod]
 *$py.class
-.Python
-env/
-venv/
-.venv/
-ENV/
-env.bak/
-venv.bak/
 
-# Django
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-media/
-staticfiles/
-*.pot
-*.pyc
-
-# Environment
+# Environment Variables
 .env
 .env.*
 
-# VS Code
-.vscode/
+# Database
+db.sqlite3
+*.sqlite3
 
 # Node
+node_modules/
 frontend/node_modules/
-frontend/.next/
-frontend/out/
-frontend/.npm/
-frontend/.yarn/
-frontend/.pnp.cjs
-frontend/.pnp.loader.mjs
+.next/
+out/
 
-# Mac / Windows
+# IDE
+.vscode/
+.idea/
+
+# Build Files
+staticfiles/
+media/
+
+# OS
 .DS_Store
 Thumbs.db
-
-# Docker
-*.log
-docker-compose.override.yml
-
-# Python packaging
-*.egg-info/
-build/
-dist/
-
-# pytest
-.pytest_cache/
-
-# mypy
-.mypy_cache/
-
-# Temporary
-*.tmp
-*.temp
-*~

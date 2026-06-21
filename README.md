@@ -1,159 +1,307 @@
-# AI Emergency Response Coordination System
+# 🚨 AI Emergency Response Coordination System
 
-A robust, production-ready backend coordination system for dispatching emergency services (Ambulance, Police, Fire), recommending nearest available units/hospitals based on GPS proximity, auto-classifying severity via AI, and notifying target recipients in real-time.
+An AI-powered emergency coordination platform designed to streamline communication between citizens, dispatchers, responders, and hospitals during emergency situations.
 
----
-
-## 🚀 Key Features
-
-*   **Role-Based Security:** Custom DRF permissions for `Citizen`, `Dispatcher`, `Responder`, and `Hospital` users.
-*   **Automatic AI Triage:** Classifies severity (`low`, `medium`, `critical`) and recommends units upon report submission. Supports Gemini multimodal uploads (text/audio/image) with a robust rule-based fallback.
-*   **Geospatial Dispatching:** Computes real-time Haversine distance between incidents, active responders, and hospitals.
-*   **Notifications Engine:** Signals automatically trigger event notifications for target users.
-*   **Deploy-Ready Setup:** Multi-database support (SQLite/PostgreSQL) and complete Docker-compose configuration.
+The system automatically analyzes emergency reports, recommends the nearest available response units, identifies suitable hospitals based on capacity and proximity, tracks responders in real time, and provides a centralized command center for emergency management.
 
 ---
 
-## 🛠️ Quick Local Setup
+## 📌 Problem Statement
 
-### 1. Environment Setup
+Traditional emergency response systems often suffer from delayed coordination, inefficient resource allocation, and lack of real-time visibility.
+
+This platform addresses these challenges by combining:
+
+* AI-powered emergency triage
+* Geospatial responder dispatching
+* Hospital capacity awareness
+* Real-time responder tracking
+* Automated notifications and coordination workflows
+
+---
+
+## ✨ Key Features
+
+### 🤖 AI Emergency Analysis
+
+* Automatic severity classification
+* Emergency category detection
+* Responder type recommendation
+* Priority score generation
+* Gemini multimodal support (text, image, audio)
+* Rule-based fallback when AI services are unavailable
+
+### 🚑 Smart Responder Dispatching
+
+* Automatic nearest responder discovery
+* GPS-based distance calculation using Haversine formula
+* Availability-aware responder recommendations
+* Real-time responder status updates
+
+### 🏥 Intelligent Hospital Recommendation
+
+* Nearby hospital discovery
+* Emergency bed availability tracking
+* ICU capacity awareness
+* Travel distance estimation
+* Hospital recommendation engine
+
+### 📍 Real-Time Coordination
+
+* Live responder location tracking
+* Emergency status monitoring
+* Automated event notifications
+* Dispatcher command center dashboard
+
+### 🔐 Secure Role-Based Access Control
+
+Separate workflows and permissions for:
+
+* Citizen
+* Dispatcher
+* Responder
+* Hospital Staff
+* Administrator
+
+---
+
+## 🏗️ System Architecture
+
+Citizen reports emergency
+↓
+AI analyzes incident
+↓
+Dispatcher receives alert
+↓
+Nearest responder identified
+↓
+Hospital recommendation generated
+↓
+Responder dispatched
+↓
+Location tracked in real time
+↓
+Hospital notified
+↓
+Emergency resolved and logged
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+
+* Django
+* Django REST Framework
+* Django Channels
+* JWT Authentication
+
+### AI & Analytics
+
+* Google Gemini API
+* Rule-Based Emergency Classification
+* Geospatial Distance Calculations
+
+### Database
+
+* SQLite (Development)
+* PostgreSQL (Production)
+
+### Real-Time Communication
+
+* WebSockets
+* ASGI
+* Uvicorn
+
+### DevOps
+
+* Docker
+* Docker Compose
+
+---
+
+## 📂 Project Structure
+
+```text
+AI-Emergency-Response-System/
+│
+├── emergency_response/
+│   ├── apps/
+│   │   ├── users/
+│   │   ├── emergencies/
+│   │   ├── responders/
+│   │   ├── hospitals/
+│   │   ├── notifications/
+│   │   └── ai/
+│   │
+│   ├── config/
+│   └── manage.py
+│
+├── frontend/
+│
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🚀 Local Setup
+
+### Clone Repository
 
 ```bash
-# Clone/Open the directory and create venv
+git clone <repository-url>
+cd AI-Emergency-Response-System
+```
+
+### Create Virtual Environment
+
+```bash
 python -m venv .venv
+```
 
-# Activate virtualenv (Windows)
-.\.venv\Scripts\activate
+### Activate Environment
 
-# Install dependencies
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+Linux/macOS:
+
+```bash
+source .venv/bin/activate
+```
+
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-### 2. Configuration (`.env`)
-Create a `.env` file in the root directory. To run quickly without setting up PostgreSQL, use the **SQLite fallback**:
-```ini
-DJANGO_SECRET_KEY=dev-secret-key-123456789
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file:
+
+```env
+DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=True
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
 
-# Enable SQLite for out-of-the-box local setup:
 USE_SQLITE=True
 
-# Optional: Add your Google Gemini API Key for real multimodal analysis
-# GEMINI_API_KEY=your_gemini_api_key_here
+# Optional
+GEMINI_API_KEY=your_api_key
 ```
 
-### 3. Migrations, Seeding & Tests
+---
+
+## 🗄️ Database Setup
 
 ```bash
-# Apply migrations
 python emergency_response/manage.py migrate
+```
 
-# Seed mock users, responders, and hospitals
+Seed demo data:
+
+```bash
 python emergency_response/manage.py seed_data
-
-# Run the integration test suite
-python emergency_response/manage.py test apps.users
-```
-
-### 4. Running Dev Server (with WebSockets)
-
-**Use uvicorn** (required for Socket.IO real-time features):
-
-```bash
-uvicorn config.asgi:application --reload --host 127.0.0.1 --port 8000
-```
-
-Run from the `emergency_response/` directory, or:
-
-```bash
-cd emergency_response
-..\.venv\Scripts\uvicorn config.asgi:application --reload --host 127.0.0.1 --port 8000
-```
-
-> `runserver` does **not** support WebSockets. Use uvicorn for live map, analytics, and notifications.
-
-Alternatively for quick testing without real-time:
-```bash
-python emergency_response/manage.py runserver
 ```
 
 ---
 
-## 👥 Seeded Mock Credentials
-Use these credentials to query authenticated API endpoints:
+## ▶️ Run Backend Server
 
-| Username | Password | Role | Description |
-|---|---|---|---|
-| `citizen1` | `password123` | Citizen | Report emergencies |
-| `dispatcher1` | `password123` | Dispatcher | Query AI recommendations, assign responders, notify hospitals |
-| `responder_unit1` | `password123` | Responder | Ambulance (Unit 1), updates location & status |
-| `responder_unit2` | `password123` | Responder | Patrol (Unit 1) |
-| `responder_unit3` | `password123` | Responder | Fire Engine (Unit 1) |
-| `hospital_staff1` | `password123` | Hospital | Hospital recipient user |
+Development:
+
+```bash
+python emergency_response/manage.py runserver
+```
+
+Real-Time Mode:
+
+```bash
+uvicorn config.asgi:application --reload
+```
+
+API Base URL:
+
+```text
+http://127.0.0.1:8000
+```
 
 ---
 
-## 🖥️ Frontend (Next.js Command Center UI)
-
-A production-quality React dashboard is included in the `frontend/` folder.
+## 🖥️ Run Frontend
 
 ```bash
-# Terminal 1 — Backend
-python emergency_response/manage.py runserver
-
-# Terminal 2 — Frontend
 cd frontend
+
 npm install
+
 npm run dev
 ```
 
-Open **http://localhost:3000** and sign in with seeded credentials (e.g. `dispatcher1` / `password123`).
+Frontend URL:
 
-**Real-time features** require the backend to run with **uvicorn** (see root README).
+```text
+http://localhost:3000
+```
 
-See [frontend/README.md](frontend/README.md) for full details.
+---
+
+## 👥 Demo Accounts
+
+| Username        | Password    | Role       |
+| --------------- | ----------- | ---------- |
+| citizen1        | password123 | Citizen    |
+| dispatcher1     | password123 | Dispatcher |
+| responder_unit1 | password123 | Ambulance  |
+| responder_unit2 | password123 | Police     |
+| responder_unit3 | password123 | Fire       |
+| hospital_staff1 | password123 | Hospital   |
 
 ---
 
 ## 🐳 Docker Deployment
 
-The application is completely containerized. Start the API server alongside a PostgreSQL database with a single command:
+Start the complete application stack:
 
 ```bash
 docker-compose up --build
 ```
-This automatically compiles the image, starts PostgreSQL, runs migrations, seeds dummy data, and binds the server to `http://localhost:8000`.
+
+This will:
+
+* Start PostgreSQL
+* Run migrations
+* Seed demo data
+* Launch the backend server
 
 ---
 
-## 📡 Core API Routes
+## 🔮 Future Enhancements
 
-### Authentication (`/api/auth/`)
-*   `POST /api/auth/register/` — Register a new account.
-*   `POST /api/auth/login/` — Retrieve JWT access & refresh tokens.
-*   `POST /api/auth/refresh/` — Refresh active token.
-*   `GET /api/auth/me/` — Retrieve current user profile details.
+* Advanced AI triage models
+* Hospital capacity prediction
+* Emergency heatmaps
+* Mass casualty response mode
+* Traffic-aware routing
+* Mobile application
+* GIS-powered emergency analytics
+* Predictive emergency forecasting
 
-### Incident Management (`/api/emergencies/`)
-*   `POST /api/emergencies/report/` — Report an emergency (Citizen). Accepts text descriptions, voice audio files, and images.
-*   `GET /api/emergencies/` — List reported emergencies (Dispatcher).
-*   `PATCH /api/emergencies/{id}/assign/` — Assign a responder unit to an incident (Dispatcher).
-*   `PATCH /api/emergencies/{id}/status/` — Update status and log details (Dispatcher / Responder).
+---
 
-### Responder Tracking (`/api/responders/`)
-*   `GET /api/responders/` — List all responders (Dispatcher).
-*   `PATCH /api/responders/{id}/location/` — Update latitude & longitude coordinates (Responder).
+## 👩‍💻 Author
 
-### Hospital Logistics (`/api/hospitals/`)
-*   `GET /api/hospitals/` — List hospitals and bed counts (Dispatcher).
-*   `POST /api/hospitals/notify/` — Route an incoming patient ETA notification to a hospital (Dispatcher).
+**Shiwani Banjare**
 
-### AI Recommendations (`/api/ai/`)
-*   `POST /api/ai/emergencies/{id}/analyze/` — Request a manual AI evaluation of an emergency (Dispatcher).
-*   `GET /api/ai/emergencies/{id}/suggest-dispatch/` — Query nearby available responder units sorted by distance, matching AI recommendation (Dispatcher).
-*   `GET /api/ai/emergencies/{id}/suggest-hospital/` — Query nearby hospitals with available beds sorted by travel distance and ETA (Dispatcher).
+B.Tech – Data Science & Artificial Intelligence
+International Institute of Information Technology, Naya Raipur
 
-### Notifications (`/api/notifications/`)
-*   `GET /api/notifications/` — List notifications for the authenticated user (All roles).
-*   `PATCH /api/notifications/{pk}/read/` — Mark a notification as read (All roles).
+Built to explore AI-assisted emergency coordination, geospatial dispatching, and real-time emergency response systems.
