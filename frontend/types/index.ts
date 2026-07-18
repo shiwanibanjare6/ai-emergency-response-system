@@ -48,6 +48,19 @@ export interface Emergency {
   lat: number;
   lng: number;
   severity: EmergencySeverity;
+  severity_score: number;
+  confidence: number;
+  priority: "P1" | "P2" | "P3";
+
+  recommended_responder_type: ResponderType;
+
+  possible_conditions: string[];
+
+  required_units: string[];
+
+  recommended_hospital_type: string;
+
+  estimated_response_minutes: number;
   status: EmergencyStatus;
   responder: number | null;
   created_at: string;
@@ -93,9 +106,21 @@ export interface Notification {
   created_at: string;
 }
 
+ 
 export interface AIAnalysis {
   severity: EmergencySeverity;
+  severity_score: number;
+  confidence: number;
+  priority: "P1" | "P2" | "P3";
+
   responder_type: ResponderType;
+
+  required_units: string[];
+  possible_conditions: string[];
+
+  recommended_hospital_type: string;
+  estimated_response_minutes: number;
+
   explanation: string;
   transcribed_text?: string;
 }

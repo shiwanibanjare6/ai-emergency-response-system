@@ -31,14 +31,61 @@ class AnalyzeEmergencyView(APIView):
         )
         
         # Save severity
-        emergency.severity = analysis['severity']
-        emergency.save(update_fields=['severity'])
+        emergency.severity = analysis["severity"]
+        emergency.severity_score = analysis["severity_score"]
+        emergency.confidence = analysis["confidence"]
+        emergency.priority = analysis["priority"]
+        emergency.recommended_responder_type = analysis["responder_type"]
+        emergency.possible_conditions = analysis["possible_conditions"]
+        emergency.required_units = analysis["required_units"]
+        emergency.recommended_hospital_type = analysis["recommended_hospital_type"]
+        emergency.estimated_response_minutes = analysis["estimated_response_minutes"]
+
+        emergency.save(
+            update_fields=[
+                "severity",
+                "severity_score",
+                "confidence",
+                "priority",
+                "recommended_responder_type",
+                "possible_conditions",
+                "required_units",
+                "recommended_hospital_type",
+                "estimated_response_minutes",
+            ]
+        )
         
         # Log in history
-        note = f"AI Analysis: Severity -> {analysis['severity']}. Recommended Unit -> {analysis['responder_type']}. Explanation: {analysis['explanation']}"
-        if analysis.get('transcribed_text'):
-            note += f" Transcription: {analysis['transcribed_text']}"
-            
+        note = (
+            f"AI Analysis | "
+            f"Severity: {analysis['severity']} "
+            f"(Score: {analysis['severity_score']}, "
+            f"Confidence: {analysis['confidence']}%, "
+            f"Priority: {analysis['priority']}) | "
+            f"Recommended Unit: {analysis['responder_type']} | "
+            f"Recommended Hospital: {analysis['recommended_hospital_type']} | "
+            f"Estimated Response: {analysis['estimated_response_minutes']} min | "
+            f"Explanation: {analysis['explanation']}"
+        )
+
+        if analysis.get("possible_conditions"):
+            note += (
+                f" | Possible Conditions: "
+                f"{', '.join(analysis['possible_conditions'])}"
+            )
+
+        if analysis.get("required_units"):
+            note += (
+                f" | Required Units: "
+                f"{', '.join(analysis['required_units'])}"
+            )
+
+        if analysis.get("transcribed_text"):
+            note += (
+                f" | Transcription: "
+                f"{analysis['transcribed_text']}"
+            )
+                    
         EmergencyStatusHistory.objects.create(
             emergency=emergency,
             status=emergency.status,
@@ -58,8 +105,7 @@ class SuggestDispatchView(APIView):
         emergency = get_object_or_404(Emergency, pk=id)
         
         # Re-analyze description to get recommended unit
-        analysis = analyze_emergency_report(emergency.description)
-        rec_type = analysis['responder_type']
+        rec_type = emergency.recommended_responder_type
         
         available_responders = Responder.objects.filter(status=ResponderStatus.AVAILABLE).select_related('user')
         

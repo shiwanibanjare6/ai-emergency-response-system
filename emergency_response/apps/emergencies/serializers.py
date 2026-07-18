@@ -33,6 +33,15 @@ class EmergencySerializer(serializers.ModelSerializer):
             'lat',
             'lng',
             'severity',
+            "severity",
+            "severity_score",
+            "confidence",
+            "priority",
+            "recommended_responder_type",
+            "possible_conditions",
+            "required_units",
+            "recommended_hospital_type",
+            "estimated_response_minutes",
             'status',
             'responder',
             'created_at',
@@ -74,15 +83,53 @@ class EmergencyReportSerializer(serializers.ModelSerializer):
         
         try:
             analysis = analyze_emergency_report(
-                description=emergency.description,
-                image_path=image_path,
-                voice_path=voice_path
+            description=emergency.description,
+            image_path=image_path,
+            voice_path=voice_path,
             )
-            emergency.severity = analysis['severity']
-            emergency.save(update_fields=['severity'])
+
+            emergency.severity = analysis["severity"]
+            emergency.severity_score = analysis["severity_score"]
+            emergency.confidence = analysis["confidence"]
+            emergency.priority = analysis["priority"]
+            emergency.recommended_responder_type = analysis["responder_type"]
+            emergency.possible_conditions = analysis["possible_conditions"]
+            emergency.required_units = analysis["required_units"]
+            emergency.recommended_hospital_type = analysis["recommended_hospital_type"]
+            emergency.estimated_response_minutes = analysis["estimated_response_minutes"]
+
+            emergency.save(
+                update_fields=[
+                    "severity",
+                    "severity_score",
+                    "confidence",
+                    "priority",
+                    "recommended_responder_type",
+                    "possible_conditions",
+                    "required_units",
+                    "recommended_hospital_type",
+                    "estimated_response_minutes",
+                ]
+            )
             
-            note = f"Reported (Auto-analyzed by AI). Severity: {analysis['severity']}. Recommended Unit: {analysis['responder_type']}."
-            if analysis.get('transcribed_text'):
+            note = (
+                f"Reported (Auto-analyzed by AI). "
+                f"Severity: {analysis['severity']} "
+                f"(Score: {analysis['severity_score']}, "
+                f"Confidence: {analysis['confidence']}%, "
+                f"Priority: {analysis['priority']}). "
+                f"Recommended Unit: {analysis['responder_type']}. "
+                f"Hospital: {analysis['recommended_hospital_type']}. "
+                f"ETA: {analysis['estimated_response_minutes']} min."
+            )
+
+            if analysis.get("possible_conditions"):
+                note += (
+                    f" Possible Conditions: "
+                    f"{', '.join(analysis['possible_conditions'])}."
+                )
+
+            if analysis.get("transcribed_text"):
                 note += f" Transcription: {analysis['transcribed_text']}"
         except Exception:
             note = 'Reported (AI auto-analysis failed, default severity set).'

@@ -42,6 +42,11 @@ export default function DispatcherEmergencyDetail({ params }: { params: Promise<
     mutationFn: () => aiService.analyze(emergencyId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["emergencies", emergencyId] });
+
+      qc.invalidateQueries({
+        queryKey: ["ai-dispatch", emergencyId],
+      });
+
       toast.success("AI analysis updated");
     },
   });
@@ -104,12 +109,131 @@ export default function DispatcherEmergencyDetail({ params }: { params: Promise<
                 Re-analyze
               </Button>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm text-zinc-400">
-              <p>Recommended unit: <Badge variant="outline">{dispatch?.recommended_type ?? "—"}</Badge></p>
-              {analyze.data?.ai_result && (
-                <p className="text-xs">{(analyze.data.ai_result as AIAnalysis).explanation}</p>
-              )}
-            </CardContent>
+            <CardContent className="space-y-4 text-sm">
+
+  <div className="grid grid-cols-2 gap-3">
+
+    <div className="rounded-lg border border-zinc-800 p-3">
+      <p className="text-xs text-zinc-500">Severity</p>
+      <SeverityBadge severity={emergency.severity} />
+    </div>
+
+    <div className="rounded-lg border border-zinc-800 p-3">
+      <p className="text-xs text-zinc-500">Priority</p>
+      <Badge
+  className={
+    emergency.priority === "P1"
+      ? "bg-red-600"
+      : emergency.priority === "P2"
+      ? "bg-yellow-600"
+      : "bg-green-600"
+  }
+>
+  {emergency.priority}
+</Badge>
+    </div>
+
+    <div className="rounded-lg border border-zinc-800 p-3">
+      <p className="text-xs text-zinc-500">
+        Severity Score
+      </p>
+      <p className="text-xl font-bold text-red-400">
+        {emergency.severity_score}/100
+      </p>
+    </div>
+
+    <div className="rounded-lg border border-zinc-800 p-3">
+      <p className="text-xs text-zinc-500">
+        Confidence
+      </p>
+      <p className="text-xl font-bold">
+        {emergency.confidence}%
+      </p>
+    </div>
+
+  </div>
+
+  <div>
+    <p className="mb-1 text-xs text-zinc-500">
+      Recommended Unit
+    </p>
+
+    <Badge variant="outline">
+      {emergency.recommended_responder_type}
+    </Badge>
+  </div>
+
+  <div>
+    <p className="mb-1 text-xs text-zinc-500">
+      Required Units
+    </p>
+
+    <div className="flex flex-wrap gap-2">
+      {emergency.required_units.map((unit) => (
+        <Badge
+          key={unit}
+          variant="secondary"
+        >
+          {unit}
+        </Badge>
+      ))}
+    </div>
+  </div>
+
+  <div>
+    <p className="mb-1 text-xs text-zinc-500">
+      Possible Conditions
+    </p>
+
+    <div className="flex flex-wrap gap-2">
+      {emergency.possible_conditions.map((condition) => (
+        <Badge
+          key={condition}
+          variant="outline"
+        >
+          {condition}
+        </Badge>
+      ))}
+    </div>
+  </div>
+
+  <div className="grid grid-cols-2 gap-3">
+
+    <div className="rounded-lg border border-zinc-800 p-3">
+      <p className="text-xs text-zinc-500">
+        Hospital
+      </p>
+
+      <p className="font-medium">
+        {emergency.recommended_hospital_type}
+      </p>
+    </div>
+
+    <div className="rounded-lg border border-zinc-800 p-3">
+      <p className="text-xs text-zinc-500">
+        Estimated Response
+      </p>
+
+      <p className="font-medium">
+        {emergency.estimated_response_minutes} min
+      </p>
+    </div>
+
+  </div>
+
+  {analyze.data?.ai_result && (
+    <div className="rounded-lg border border-zinc-800 p-3">
+      <p className="mb-2 text-xs text-zinc-500">
+        AI Explanation
+      </p>
+
+      <p className="text-sm text-zinc-300">
+        {(analyze.data.ai_result as AIAnalysis).explanation}
+      </p>
+    </div>
+  )}
+
+</CardContent>
           </Card>
 
           <Card>

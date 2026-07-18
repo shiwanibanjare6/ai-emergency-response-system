@@ -39,6 +39,21 @@ class Emergency(models.Model):
     lat = models.FloatField()
     lng = models.FloatField()
     severity = models.CharField(max_length=20, choices=EmergencySeverity.choices, default=EmergencySeverity.LOW)
+    severity_score = models.PositiveSmallIntegerField(default=0)
+    confidence = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    priority = models.CharField(max_length=2, default="P3")
+    recommended_responder_type = models.CharField(max_length=20,default="ambulance")
+    possible_conditions = models.JSONField(default=list)
+
+    required_units = models.JSONField(default=list)
+
+    recommended_hospital_type = models.CharField(
+        max_length=100,
+        blank=True,
+        default=""
+    )
+
+    estimated_response_minutes = models.PositiveIntegerField(default=15)
     status = models.CharField(max_length=30, choices=EmergencyStatus.choices, default=EmergencyStatus.REPORTED)
     responder = models.ForeignKey(
         'responders.Responder',
