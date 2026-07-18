@@ -1,181 +1,256 @@
 # 🚨 AI Emergency Response Coordination System
 
-An AI-powered emergency coordination platform designed to streamline communication between citizens, dispatchers, responders, and hospitals during emergency situations.
+An **AI-powered Emergency Response Coordination System** that enables citizens, dispatchers, responders, and hospitals to collaborate efficiently during emergency situations.
 
-The system automatically analyzes emergency reports, recommends the nearest available response units, identifies suitable hospitals based on capacity and proximity, tracks responders in real time, and provides a centralized command center for emergency management.
-
----
-
-## 📌 Problem Statement
-
-Traditional emergency response systems often suffer from delayed coordination, inefficient resource allocation, and lack of real-time visibility.
-
-This platform addresses these challenges by combining:
-
-* AI-powered emergency triage
-* Geospatial responder dispatching
-* Hospital capacity awareness
-* Real-time responder tracking
-* Automated notifications and coordination workflows
+The platform leverages **Google Gemini AI**, **real-time communication**, and **geospatial intelligence** to analyze emergencies, recommend responders, identify suitable hospitals, and coordinate emergency response from a centralized dashboard.
 
 ---
 
-## ✨ Key Features
+# 📌 Problem Statement
 
-### 🤖 AI Emergency Analysis
+Traditional emergency response systems often suffer from:
 
-* Automatic severity classification
-* Emergency category detection
-* Responder type recommendation
-* Priority score generation
-* Gemini multimodal support (text, image, audio)
-* Rule-based fallback when AI services are unavailable
+- Delayed emergency analysis
+- Manual responder allocation
+- Lack of hospital awareness
+- Poor coordination
+- Limited real-time monitoring
 
-### 🚑 Smart Responder Dispatching
-
-* Automatic nearest responder discovery
-* GPS-based distance calculation using Haversine formula
-* Availability-aware responder recommendations
-* Real-time responder status updates
-
-### 🏥 Intelligent Hospital Recommendation
-
-* Nearby hospital discovery
-* Emergency bed availability tracking
-* ICU capacity awareness
-* Travel distance estimation
-* Hospital recommendation engine
-
-### 📍 Real-Time Coordination
-
-* Live responder location tracking
-* Emergency status monitoring
-* Automated event notifications
-* Dispatcher command center dashboard
-
-### 🔐 Secure Role-Based Access Control
-
-Separate workflows and permissions for:
-
-* Citizen
-* Dispatcher
-* Responder
-* Hospital Staff
-* Administrator
+This project solves these problems through AI-assisted emergency triage, intelligent dispatching, live tracking, and hospital coordination.
 
 ---
 
-## 🏗️ System Architecture
+# ✨ Features
 
-Citizen reports emergency
-↓
-AI analyzes incident
-↓
-Dispatcher receives alert
-↓
-Nearest responder identified
-↓
-Hospital recommendation generated
-↓
-Responder dispatched
-↓
-Location tracked in real time
-↓
-Hospital notified
-↓
-Emergency resolved and logged
+## 🤖 AI Emergency Analysis
+
+- AI-powered emergency severity prediction
+- Priority generation (P1, P2, P3)
+- Severity score (0–100)
+- Confidence estimation
+- Emergency condition prediction
+- Recommended responder type
+- Hospital recommendation
+- Estimated response time
+- Gemini multimodal support (Text, Image & Voice)
+- Automatic fallback to local rule engine
 
 ---
 
-## 🛠️ Tech Stack
+## 🚑 Smart Emergency Dispatch
 
-### Backend
-
-* Django
-* Django REST Framework
-* Django Channels
-* JWT Authentication
-
-### AI & Analytics
-
-* Google Gemini API
-* Rule-Based Emergency Classification
-* Geospatial Distance Calculations
-
-### Database
-
-* SQLite (Development)
-* PostgreSQL (Production)
-
-### Real-Time Communication
-
-* WebSockets
-* ASGI
-* Uvicorn
-
-### DevOps
-
-* Docker
-* Docker Compose
+- Automatic responder recommendation
+- GPS-based responder discovery
+- Haversine distance calculation
+- Availability-aware dispatch
+- Multiple responder unit support
 
 ---
 
-## 📂 Project Structure
+## 🏥 Hospital Recommendation
+
+- Nearby hospital discovery
+- Bed availability monitoring
+- ICU capacity awareness
+- Distance estimation
+- AI-assisted hospital recommendation
+
+---
+
+## 📍 Real-Time Coordination
+
+- Live emergency updates
+- Real-time responder tracking
+- Emergency timeline
+- WebSocket communication
+- Dispatcher command center
+
+---
+
+## 🔐 Authentication & Role Management
+
+Role-based authentication for:
+
+- 👤 Citizen
+- 🎛️ Dispatcher
+- 🚑 Responder
+- 🏥 Hospital Staff
+- 👨‍💼 Administrator
+
+---
+
+# 🏗️ System Workflow
 
 ```text
-AI-Emergency-Response-System/
+Citizen Reports Emergency
+            │
+            ▼
+AI Emergency Analysis
+            │
+            ▼
+Dispatcher Dashboard
+            │
+            ▼
+Nearest Responder Recommendation
+            │
+            ▼
+Hospital Recommendation
+            │
+            ▼
+Responder Assigned
+            │
+            ▼
+Real-Time Tracking
+            │
+            ▼
+Hospital Notification
+            │
+            ▼
+Emergency Resolved
+```
+
+---
+
+# 📷 Screenshots
+
+> Add your screenshots inside a folder named **screenshots**.
+
+### Landing Page
+
+```
+screenshots/home.png
+```
+
+### Dispatcher Dashboard
+
+```
+screenshots/dashboard.png
+```
+
+### Emergency AI Analysis
+
+```
+screenshots/ai-analysis.png
+```
+
+### Analytics Dashboard
+
+```
+screenshots/analytics.png
+```
+
+### Live Emergency Map
+
+```
+screenshots/map.png
+```
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- TanStack Query
+- Recharts
+- Leaflet Maps
+
+## Backend
+
+- Django
+- Django REST Framework
+- Django Channels
+- JWT Authentication
+
+## AI
+
+- Google Gemini API
+- Rule-Based Emergency Classification
+
+## Database
+
+- SQLite
+- PostgreSQL
+
+## Real-Time
+
+- WebSockets
+- ASGI
+- Uvicorn
+
+## DevOps
+
+- Docker
+- Docker Compose
+
+---
+
+# 📂 Project Structure
+
+```text
+AI-Emergency-Response-System
 │
-├── emergency_response/
+├── backend/
 │   ├── apps/
-│   │   ├── users/
-│   │   ├── emergencies/
-│   │   ├── responders/
-│   │   ├── hospitals/
-│   │   ├── notifications/
-│   │   └── ai/
-│   │
 │   ├── config/
+│   ├── requirements.txt
 │   └── manage.py
 │
 ├── frontend/
+│   ├── app/
+│   ├── components/
+│   ├── hooks/
+│   ├── services/
+│   ├── types/
+│   └── public/
 │
 ├── docker-compose.yml
-├── requirements.txt
-└── README.md
+├── README.md
+└── .env.example
 ```
 
 ---
 
-## 🚀 Local Setup
+# 🚀 Installation
 
-### Clone Repository
+## Clone Repository
 
 ```bash
-git clone <repository-url>
-cd AI-Emergency-Response-System
+git clone https://github.com/shiwanibanjare6/ai-emergency-response-system.git
+
+cd ai-emergency-response-system
 ```
 
-### Create Virtual Environment
+---
+
+## Backend Setup
+
+Create virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
-### Activate Environment
+Activate
 
-Windows:
+Windows
 
 ```bash
 .venv\Scripts\activate
 ```
 
-Linux/macOS:
+Linux / macOS
 
 ```bash
 source .venv/bin/activate
 ```
 
-### Install Dependencies
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -183,60 +258,59 @@ pip install -r requirements.txt
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
-Create a `.env` file:
+Create a `.env` file.
 
 ```env
 DJANGO_SECRET_KEY=your-secret-key
+
 DJANGO_DEBUG=True
+
 DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
 
 USE_SQLITE=True
 
-# Optional
-GEMINI_API_KEY=your_api_key
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
 ---
 
-## 🗄️ Database Setup
+## Database
 
 ```bash
-python emergency_response/manage.py migrate
+python manage.py migrate
 ```
 
-Seed demo data:
+(Optional)
 
 ```bash
-python emergency_response/manage.py seed_data
+python manage.py seed_data
 ```
 
 ---
 
-## ▶️ Run Backend Server
-
-Development:
+## Run Backend
 
 ```bash
-python emergency_response/manage.py runserver
+python manage.py runserver
 ```
 
-Real-Time Mode:
+or
 
 ```bash
 uvicorn config.asgi:application --reload
 ```
 
-API Base URL:
+Backend
 
-```text
+```
 http://127.0.0.1:8000
 ```
 
 ---
 
-## 🖥️ Run Frontend
+## Frontend
 
 ```bash
 cd frontend
@@ -246,62 +320,87 @@ npm install
 npm run dev
 ```
 
-Frontend URL:
+Frontend
 
-```text
+```
 http://localhost:3000
 ```
 
 ---
 
-## 👥 Demo Accounts
+# 👥 Demo Accounts
 
-| Username        | Password    | Role       |
-| --------------- | ----------- | ---------- |
-| citizen1        | password123 | Citizen    |
-| dispatcher1     | password123 | Dispatcher |
-| responder_unit1 | password123 | Ambulance  |
-| responder_unit2 | password123 | Police     |
-| responder_unit3 | password123 | Fire       |
-| hospital_staff1 | password123 | Hospital   |
+| Username | Password | Role |
+|------------|------------|------------|
+| citizen1 | password123 | Citizen |
+| dispatcher1 | password123 | Dispatcher |
+| responder_unit1 | password123 | Ambulance |
+| responder_unit2 | password123 | Police |
+| responder_unit3 | password123 | Fire |
+| hospital_staff1 | password123 | Hospital |
 
 ---
 
-## 🐳 Docker Deployment
+# 📊 Major Modules
 
-Start the complete application stack:
+- Citizen Portal
+- Dispatcher Dashboard
+- AI Emergency Analysis
+- Analytics Dashboard
+- Emergency Timeline
+- Hospital Dashboard
+- Responder Dashboard
+- Live Map Tracking
+- Notification System
+
+---
+
+# 🔥 Key Highlights
+
+- AI-powered emergency severity prediction
+- Multimodal emergency analysis
+- Intelligent responder recommendation
+- Hospital recommendation engine
+- Real-time dashboards
+- Live location tracking
+- Secure JWT authentication
+- WebSocket communication
+- Responsive UI
+- Modern dashboard interface
+
+---
+
+# 🐳 Docker
+
+Run the complete application.
 
 ```bash
 docker-compose up --build
 ```
 
-This will:
+---
 
-* Start PostgreSQL
-* Run migrations
-* Seed demo data
-* Launch the backend server
+# 🚀 Future Enhancements
+
+- Mobile Application
+- Traffic-aware Routing
+- Drone-assisted Emergency Response
+- Emergency Heatmaps
+- Predictive Emergency Analytics
+- GIS Integration
+- Federated AI Models
+- Offline Emergency Reporting
 
 ---
 
-## 🔮 Future Enhancements
-
-* Advanced AI triage models
-* Hospital capacity prediction
-* Emergency heatmaps
-* Mass casualty response mode
-* Traffic-aware routing
-* Mobile application
-* GIS-powered emergency analytics
-* Predictive emergency forecasting
-
----
-
-## 👩‍💻 Author
+# 👩‍💻 Author
 
 **Shiwani Banjare**
 
 B.Tech – Data Science & Artificial Intelligence
+
 International Institute of Information Technology, Naya Raipur
 
-Built to explore AI-assisted emergency coordination, geospatial dispatching, and real-time emergency response systems.
+---
+
+## ⭐ If you found this project useful, consider giving it a star.
