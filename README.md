@@ -117,33 +117,35 @@ Emergency Resolved
 
 ### Landing Page
 
-```
-screenshots/home.png
-```
+<img width="1862" height="820" alt="Screenshot 2026-07-18 120419" src="https://github.com/user-attachments/assets/2dcd059e-b906-49c0-a623-dfc92df3b914" />
+<img width="1891" height="958" alt="Screenshot 2026-07-18 120434" src="https://github.com/user-attachments/assets/c84b5eba-6bee-4985-bb5a-40afae0945c2" />
+
+### Citizen Dashboard
+
+<img width="1835" height="681" alt="Screenshot 2026-07-18 122951" src="https://github.com/user-attachments/assets/264eefbe-3595-449f-9841-f3168e33fe88" />
+
 
 ### Dispatcher Dashboard
 
-```
-screenshots/dashboard.png
-```
+<img width="1831" height="910" alt="Screenshot 2026-07-18 123033" src="https://github.com/user-attachments/assets/a5b14c48-bc6c-4a82-84da-6d8f96c4ee66" />
+
+
 
 ### Emergency AI Analysis
 
-```
-screenshots/ai-analysis.png
-```
+
 
 ### Analytics Dashboard
 
-```
-screenshots/analytics.png
-```
+<img width="1826" height="907" alt="Screenshot 2026-07-18 124235" src="https://github.com/user-attachments/assets/5857d734-da47-4eb4-b003-255e58994801" />
+
+<img width="1823" height="912" alt="Screenshot 2026-07-18 124300" src="https://github.com/user-attachments/assets/0fb88f54-c5c4-48d3-a9a4-857e23aa2575" />
+
 
 ### Live Emergency Map
 
-```
-screenshots/map.png
-```
+<img width="1831" height="908" alt="Screenshot 2026-07-18 124525" src="https://github.com/user-attachments/assets/5785913f-ddcc-4db3-8270-b89ddba27624" />
+
 
 ---
 
