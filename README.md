@@ -399,7 +399,6 @@ docker-compose up --build
 
 **Shiwani Banjare**
 
-B.Tech – Data Science & Artificial Intelligence
 
 International Institute of Information Technology, Naya Raipur
 
